@@ -12,7 +12,7 @@ module.exports = async (id, { name, quantity }) => {
     return { err: { message: valid.error.message, code: 'invalid_data' } };
   }
 
-  await product.update({ id, name, quantity });
+  const updated = await product.update({ id, name, quantity });
 
-  return { _id: id, name, quantity };
+  return updated.value;
 };
