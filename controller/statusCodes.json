@@ -1,0 +1,5 @@
+{
+  "ok": 200,
+  "notAcceptable": 406,
+  "notImplemented": 501
+}
