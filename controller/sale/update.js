@@ -1,5 +1,23 @@
+const service = require('../../service/sale');
 const statusCodes = require('../statusCodes.json');
 
-module.exports = async (_req, res, _next) => {
-  res.status(statusCodes.notImplemented).end();
+module.exports = async (req, res, next) => {
+  const { id } = req.params;
+  const sale = req.body;
+
+  if (!id || !sale) {
+    return next({
+      err: { code: 'invalid_data' },
+      status: statusCodes.unprocessableEntity,
+    });
+  }
+
+  const updated = await service.update(id, sale);
+  if (updated.err) {
+    return next({
+      err: { code: updated.err.code, message: updated.err.message },
+      status: statusCodes.unprocessableEntity,
+    });
+  }
+  res.status(statusCodes.ok).json(updated);
 };
