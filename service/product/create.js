@@ -12,6 +12,11 @@ module.exports = async ({ name, quantity }) => {
     return { err: { message: valid.error.message, code: 'invalid_data' } };
   }
 
+  const find = await product.find({ name });
+  if (find) {
+    return { err: { message: 'Product already exists', code: 'already_exists' } };
+  }
+
   const insert = await product.create({ name, quantity });
   return insert.ops[0];
 };
