@@ -13,7 +13,8 @@ module.exports = async () => {
   try {
     // return connection || (connection = await MongoClient.connect(MONGO_DB_URL, MONGO_OPTS).db(DB_NAME));
     if (connection) return connection;
-    connection = await MongoClient.connect(MONGO_DB_URL, MONGO_OPTS).db(DB_NAME);
+    connection = (await MongoClient.connect(MONGO_DB_URL, MONGO_OPTS)).db(DB_NAME);
+
     return connection;
   } catch (e) {
     console.log(e);
