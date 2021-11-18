@@ -7,5 +7,8 @@ module.exports = async (id) => {
   }
 
   const find = await product.find(new ObjectID(id));
+  if (!find) {
+    return { err: { message: 'Product not found', code: 'not_found' } };
+  }
   return find;
 };
