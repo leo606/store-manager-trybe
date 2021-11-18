@@ -13,4 +13,6 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
+app.use(require('./middlewares/error'));
+
 app.listen(PORT, console.log('listening on port', PORT));
