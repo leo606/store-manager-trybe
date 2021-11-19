@@ -11,9 +11,6 @@ module.exports = async (req, res, next) => {
         code: findProduct.err.code,
         message: findProduct.err.message,
       },
-      status: findProduct.err.code === 'invalid_data'
-      ? statusCodes.unprocessableEntity
-      : statusCodes.notFound,
     });
   }
 

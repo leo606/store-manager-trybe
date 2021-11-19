@@ -8,7 +8,6 @@ module.exports = async (req, res, next) => {
   if (deleted.err) {
     return next({
       err: { code: deleted.err.code, message: deleted.err.message },
-      status: statusCodes.unprocessableEntity,
     });
   }
 

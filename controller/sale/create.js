@@ -7,7 +7,6 @@ module.exports = async (req, res, next) => {
   if (!sale) {
     return next({
       err: { code: 'invalid_data' },
-      status: statusCodes.unprocessableEntity,
     });
   }
 
@@ -16,7 +15,6 @@ module.exports = async (req, res, next) => {
   if (created.err) {
     return next({
       err: { code: created.err.code, message: created.err.message },
-      status: statusCodes.unprocessableEntity,
     });
   }
 

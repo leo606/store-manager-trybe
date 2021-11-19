@@ -13,7 +13,6 @@ module.exports = async (req, res, next) => {
   if (sale.err) {
     return next({
       err: { code: sale.err.code, message: sale.err.message },
-      status: statusCodes.notFound,
     });
   }
 

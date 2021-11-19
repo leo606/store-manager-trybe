@@ -8,7 +8,6 @@ module.exports = async (req, res, next) => {
   if (!id || !sale) {
     return next({
       err: { code: 'invalid_data' },
-      status: statusCodes.unprocessableEntity,
     });
   }
 
@@ -16,7 +15,6 @@ module.exports = async (req, res, next) => {
   if (updated.err) {
     return next({
       err: { code: updated.err.code, message: updated.err.message },
-      status: statusCodes.unprocessableEntity,
     });
   }
   res.status(statusCodes.ok).json(updated);

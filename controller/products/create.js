@@ -9,7 +9,6 @@ module.exports = async (req, res, next) => {
     if (insert.err) {
       return next({
         err: { message: insert.err.message, code: insert.err.code },
-        status: statusCodes.unprocessableEntity,
       });
     }
 

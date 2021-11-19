@@ -8,11 +8,12 @@ module.exports = async (req, res, next) => {
   const updated = await service.update(id, { name, quantity });
 
   if (updated.err) {
-    return next({ err: {
-      code: updated.err.code,
-      message: updated.err.message,
-    },
-    status: statusCodes.unprocessableEntity });
+    return next({
+      err: {
+        code: updated.err.code,
+        message: updated.err.message,
+      },
+    });
   }
 
   res.status(statusCodes.ok).json(updated);
