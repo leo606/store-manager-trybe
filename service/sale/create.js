@@ -1,5 +1,6 @@
 const { ObjectID } = require('mongodb');
 const sale = require('../../model/document')('sales');
+const { getIdsListIn, projectListOfProducts } = require('../commons/queryList');
 const product = require('../../model/document')('products');
 const { saleSchema } = require('../joiSchemas');
 
@@ -23,14 +24,7 @@ function bulkArrayGenerate(productsList) {
     },
   }));
 }
-const project = {
-  _id: 0,
-  quantity: 1,
-  id: { $toString: '$_id' },
-};
 
-// products [ {producdID: xx, quantity: xxx}, {} ]
-// match [ {id: xx, quantity: xxx}, {} ]
 function haveNegative(products, match) {
   return products.some((p) => {
     const matched = match.find((m) => m.id === p.productId);
@@ -43,10 +37,8 @@ module.exports = async (products) => {
     const valid = saleSchema.validate(products);
     if (valid.error) return errorGen('invalid_data');
 
-    const queryMatch = {
-      _id: { $in: products.map((p) => new ObjectID(p.productId)) },
-    };
-    const productsMatched = await product.list(queryMatch, project);
+    const idsList = getIdsListIn(products);
+    const productsMatched = await product.list(idsList, projectListOfProducts);
     if (haveNegative(products, productsMatched)) { return errorGen('stock_problem'); }
 
     await product.bulk(bulkArrayGenerate(products));

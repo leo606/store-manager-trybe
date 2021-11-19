@@ -1,5 +1,7 @@
 const { ObjectID } = require('mongodb');
+const { bulkArrayGenerate } = require('../commons/queryList');
 const sale = require('../../model/document')('sales');
+const product = require('../../model/document')('products');
 
 const ERR_OBJ = { err: { code: 'invalid_data', message: 'Wrong sale ID format' } };
 
@@ -13,6 +15,7 @@ module.exports = async (id) => {
     if (!saleToDelete) {
       return ERR_OBJ;
     }
+    await product.bulk(bulkArrayGenerate(saleToDelete.itensSold));
 
     await sale.remove(id);
     return saleToDelete;
