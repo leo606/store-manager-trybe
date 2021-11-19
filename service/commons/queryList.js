@@ -10,11 +10,11 @@ const projectListOfProducts = {
   id: { $toString: '$_id' },
 };
 
-function bulkArrayGenerate(productsList) {
+function bulkArrayGenerate(productsList, op) {
   return productsList.map((pro) => ({
     updateOne: {
       filter: { _id: new ObjectID(pro.productId) },
-      update: { $inc: { quantity: pro.quantity } },
+      update: { $inc: { quantity: op === 'sub' ? -pro.quantity : pro.quantity } },
     },
   }));
 }

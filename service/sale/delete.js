@@ -15,7 +15,7 @@ module.exports = async (id) => {
     if (!saleToDelete) {
       return ERR_OBJ;
     }
-    await product.bulk(bulkArrayGenerate(saleToDelete.itensSold));
+    await product.bulk(bulkArrayGenerate(saleToDelete.itensSold, 'sum'));
 
     await sale.remove(id);
     return saleToDelete;

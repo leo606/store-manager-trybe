@@ -1,6 +1,5 @@
-const { ObjectID } = require('mongodb');
 const sale = require('../../model/document')('sales');
-const { getIdsListIn, projectListOfProducts } = require('../commons/queryList');
+const { getIdsListIn, projectListOfProducts, bulkArrayGenerate } = require('../commons/queryList');
 const product = require('../../model/document')('products');
 const { saleSchema } = require('../joiSchemas');
 
@@ -14,15 +13,6 @@ function errorGen(code) {
       code,
     },
   };
-}
-
-function bulkArrayGenerate(productsList) {
-  return productsList.map((pro) => ({
-    updateOne: {
-      filter: { _id: new ObjectID(pro.productId) },
-      update: { $inc: { quantity: -pro.quantity } },
-    },
-  }));
 }
 
 function haveNegative(products, match) {
@@ -41,7 +31,7 @@ module.exports = async (products) => {
     const productsMatched = await product.list(idsList, projectListOfProducts);
     if (haveNegative(products, productsMatched)) { return errorGen('stock_problem'); }
 
-    await product.bulk(bulkArrayGenerate(products));
+    await product.bulk(bulkArrayGenerate(products, 'sub'));
 
     const insert = await sale.create({ itensSold: products });
     return insert.ops[0];
