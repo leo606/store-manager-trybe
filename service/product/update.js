@@ -1,6 +1,6 @@
 const { ObjectID } = require('mongodb');
 const product = require('../../model/document')('products');
-const { productSchema } = require('../joiSchemas');
+const { productSchema } = require('../../commons/joiSchemas');
 
 module.exports = async (id, { name, quantity }) => {
   if (!ObjectID.isValid(id)) {

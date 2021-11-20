@@ -1,5 +1,5 @@
 const { ObjectID } = require('mongodb');
-const { bulkArrayGenerate } = require('../commons/queryList');
+const { bulkArrayGenerate } = require('../../commons/queryList');
 const sale = require('../../model/document')('sales');
 const product = require('../../model/document')('products');
 

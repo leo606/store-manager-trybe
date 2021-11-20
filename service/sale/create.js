@@ -1,7 +1,11 @@
 const sale = require('../../model/document')('sales');
-const { getIdsListIn, projectListOfProducts, bulkArrayGenerate } = require('../commons/queryList');
+const {
+  getIdsListIn,
+  projectListOfProducts,
+  bulkArrayGenerate,
+} = require('../../commons/queryList');
 const product = require('../../model/document')('products');
-const { saleSchema } = require('../joiSchemas');
+const { saleSchema } = require('../../commons/joiSchemas');
 
 function errorGen(code) {
   return {
@@ -29,7 +33,9 @@ module.exports = async (products) => {
 
     const idsList = getIdsListIn(products);
     const productsMatched = await product.list(idsList, projectListOfProducts);
-    if (haveNegative(products, productsMatched)) { return errorGen('stock_problem'); }
+    if (haveNegative(products, productsMatched)) {
+      return errorGen('stock_problem');
+    }
 
     await product.bulk(bulkArrayGenerate(products, 'sub'));
 

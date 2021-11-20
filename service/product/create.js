@@ -1,4 +1,4 @@
-const { productSchema } = require('../joiSchemas');
+const { productSchema } = require('../../commons/joiSchemas');
 const product = require('../../model/document')('products');
 
 module.exports = async ({ name, quantity }) => {
