@@ -1,5 +1,5 @@
 const service = require('../../service/sale');
-const statusCodes = require('../statusCodes.json');
+const statusCodes = require('../../commons/statusCodes.json');
 
 module.exports = async (_req, res, _next) => {
   const sales = await service.list();

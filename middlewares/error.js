@@ -1,4 +1,4 @@
-const statusCodes = require('./statusCodes.json');
+const statusCodes = require('../commons/statusCodes.json');
 
 function setStatus(code) {
   switch (code) {

@@ -1,4 +1,4 @@
-const statusCodes = require('../statusCodes.json');
+const statusCodes = require('../../commons/statusCodes.json');
 const service = require('../../service/product');
 
 module.exports = async (req, res, next) => {
