@@ -7,6 +7,7 @@ const mockProducts = require("./mockProducts.json");
 const bulkUpdateList = require("./mockBulkList.json");
 
 const Models = require("../../model/document")("products");
+const connection = require("../../model/connection");
 
 describe("Atualizar com bulkwrite", () => {
   const DB_OPTIONS = {
@@ -21,7 +22,7 @@ describe("Atualizar com bulkwrite", () => {
     const mockURI = await memoryServer.getUri();
     connectionMock = await MongoClient.connect(mockURI, DB_OPTIONS);
 
-    sinon.stub(Models, "bulk").resolves(connectionMock);
+    sinon.stub(connection).resolves(connectionMock);
   });
 
   describe("somar qty", () => {
