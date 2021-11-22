@@ -7,7 +7,6 @@ const mockProducts = require("./mockProducts.json");
 const bulkUpdateList = require("./mockBulkList.json");
 
 const Models = require("../../model/document")("products");
-const mongoConn = require("../../model/connection");
 
 describe("Atualizar com bulkwrite", () => {
   const DB_OPTIONS = {
@@ -17,18 +16,19 @@ describe("Atualizar com bulkwrite", () => {
 
   let connectionMock;
 
-  beforeEach(async () => {
-    const memoryServer = await MongoMemoryServer.create();
+  before(async () => {
+    const memoryServer = new MongoMemoryServer();
     const mockURI = await memoryServer.getUri();
-    console.log("oi");
     connectionMock = await MongoClient.connect(mockURI, DB_OPTIONS);
 
-    sinon.stub(mongoConn, "connect").resolves(connectionMock);
+    sinon.stub(Models, "bulk").resolves(connectionMock);
   });
 
   describe("somar qty", () => {
     it("retorna objeto", async () => {
-      expect("1").to.be.eq("1");
+      await connectionMock.collection("products").insertMany(mockProducts);
+      const bulkResp = await Models.bulk(bulkUpdateList);
+      expect(bulkResp).to.be.an("object");
     });
   });
 });
