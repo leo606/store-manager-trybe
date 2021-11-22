@@ -1,0 +1,20 @@
+[
+  {
+    "updateOne": {
+      "filter":{"_id:": {"$oid": "6198f2906e81d128301a5052"} },
+      "update":{"$inc": {"quantity": 1}}
+    }
+  },
+  {
+    "updateOne": {
+      "filter":{"_id:": {"$oid": "6198f2986e81d128301a5053"} },
+      "update":{"$inc": {"quantity": 1}}
+    }
+  },
+  {
+    "updateOne": {
+      "filter":{"_id:": {"$oid": "6198f29d6e81d128301a5054"} },
+      "update":{"$inc": {"quantity": 1}}
+    }
+  }
+]

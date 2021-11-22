@@ -1,0 +1,23 @@
+[
+  {
+    "_id": {
+      "$oid": "6198f2906e81d128301a5052"
+    },
+    "name": "product 1",
+    "quantity": 30
+  },
+  {
+    "_id": {
+      "$oid": "6198f2986e81d128301a5053"
+    },
+    "name": "product 2",
+    "quantity": 60
+  },
+  {
+    "_id": {
+      "$oid": "6198f29d6e81d128301a5054"
+    },
+    "name": "product 3",
+    "quantity": 90
+  }
+]
