@@ -1,35 +1,37 @@
 const { expect } = require("chai");
 const sinon = require("sinon");
-const { MongoClient } = require("mongodb");
 const { MongoMemoryServer } = require("mongodb-memory-server");
+const { MongoClient } = require("mongodb");
 
-const mockProducts = require("./mockProducts.json");
-const bulkUpdateList = require("./mockBulkList.json");
+const Model = require("../../model/document");
+const mongoConnection = require("../../model/connection");
 
-const Models = require("../../model/document")("products");
-const connection = require("../../model/connection");
-
-describe("Atualizar com bulkwrite", () => {
+describe("inserir filme no DB", () => {
+  const payloadProduct = {
+    title: "product one",
+    quantity: 3,
+  };
   const DB_OPTIONS = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   };
-
   let connectionMock;
 
   before(async () => {
-    const memoryServer = new MongoMemoryServer();
-    const mockURI = await memoryServer.getUri();
-    connectionMock = await MongoClient.connect(mockURI, DB_OPTIONS);
+    const memoryServer = await MongoMemoryServer.create();
+    const mockURI = memoryServer.getUri();
 
-    sinon.stub(connection).resolves(connectionMock);
+    connectionMock = MongoClient.connect(mockURI, DB_OPTIONS).then(
+      (conn) => conn.db("StoreManager")
+    );
+
+    sinon.stub(mongoConnection,'connection').resolves(connectionMock);
   });
 
-  describe("somar qty", () => {
-    it("retorna objeto", async () => {
-      await connectionMock.collection("products").insertMany(mockProducts);
-      const bulkResp = await Models.bulk(bulkUpdateList);
-      expect(bulkResp).to.be.an("object");
+  describe("inserido com sucesso", () => {
+    it("retorna um objeto", async () => {
+      const response = await MovieModel.create(payloadMovie);
+      expect(response).to.be.a("object");
     });
   });
 });

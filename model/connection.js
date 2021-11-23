@@ -9,20 +9,15 @@ const MONGO_OPTS = {
   useUnifiedTopology: true,
 };
 
-let conn = null;
+let db = null;
 
 async function connection() {
-  try {
-    // return connection || (connection = await MongoClient.connect(MONGO_DB_URL, MONGO_OPTS).db(DB_NAME));
-    if (conn) return conn;
-    conn = (await MongoClient.connect(MONGO_DB_URL, MONGO_OPTS)).db(
-      DB_NAME,
-    );
-
-    return conn;
-  } catch (e) {
-    console.log(e);
-  }
+  return db
+    ? Promise.resolve(db)
+    : MongoClient.connect(MONGO_DB_URL, MONGO_OPTS).then((conn) => {
+      db = conn.db(DB_NAME);
+      return db;
+    });
 }
 
 module.exports = { connection };
