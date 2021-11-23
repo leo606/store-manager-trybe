@@ -1,4 +1,4 @@
-const connection = require('../connection');
+const { connection } = require('../connection');
 
 module.exports = async (collection, filter) => {
   try {
