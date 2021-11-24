@@ -117,6 +117,56 @@ describe("teste de models", () => {
 
     // it("retorna um objeto correto", async () => {});
   });
+
+  describe("atualizar documento", () => {
+    const productsList = [
+      { title: "cool product", quantity: 9 },
+      { title: "foo", quantity: 3 },
+      { title: "goo", quantity: 8 },
+    ];
+
+    it("retorna um objeto correto", async () => {
+      await connectionMock
+        .db("StoreManager")
+        .collection("products")
+        .insertMany([...productsList]);
+
+      const doc = await connectionMock
+        .db("StoreManager")
+        .collection("products")
+        .findOne({ ...productsList[0] }, { $toString: "$_id" });
+
+      const response = await Model.update({ id: doc._id, quantity: 4 });
+      expect(response).to.be.a("object");
+
+      expect(response.value)
+        .to.be.a("object")
+        .that.have.property("title", "cool product");
+      expect(response.value)
+        .to.be.a("object")
+        .that.have.property("quantity", 4);
+    });
+
+    // it("retorna um objeto correto", async () => {
+    //   await connectionMock
+    //     .db("StoreManager")
+    //     .collection("products")
+    //     .insertMany([...productsList]);
+
+    //   const doc = await connectionMock
+    //     .db("StoreManager")
+    //     .collection("products")
+    //     .findOne({ ...productsList[0] }, { $toString: "$_id" });
+
+    //   const response = await Model.update({ id: doc._id, quantity: 4 });
+    //   expect(response.value)
+    //     .to.be.a("object")
+    //     .that.have.property("title", "cool product");
+    //   expect(response.value)
+    //     .to.be.a("object")
+    //     .that.have.property("quantity", 4);
+    // });
+  });
 });
 
 // describe("inserir filme no DB off", () => {
