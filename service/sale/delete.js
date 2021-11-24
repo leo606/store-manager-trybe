@@ -1,7 +1,7 @@
 const { ObjectID } = require('mongodb');
 const { bulkArrayGenerate } = require('../../commons/queryList');
-const sale = require('../../model/document')('sales');
-const product = require('../../model/document')('products');
+const sale = require('../../models/document')('sales');
+const product = require('../../models/document')('products');
 
 const ERR_OBJ = { err: { code: 'invalid_data', message: 'Wrong sale ID format' } };
 

@@ -1,10 +1,10 @@
-const sale = require('../../model/document')('sales');
+const sale = require('../../models/document')('sales');
 const {
   getIdsListIn,
   projectListOfProducts,
   bulkArrayGenerate,
 } = require('../../commons/queryList');
-const product = require('../../model/document')('products');
+const product = require('../../models/document')('products');
 const { saleSchema } = require('../../commons/joiSchemas');
 
 function errorGen(code) {

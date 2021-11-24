@@ -1,5 +1,5 @@
 const { productSchema } = require('../../commons/joiSchemas');
-const product = require('../../model/document')('products');
+const product = require('../../models/document')('products');
 
 module.exports = async ({ name, quantity }) => {
   const valid = productSchema.validate({ name, quantity });

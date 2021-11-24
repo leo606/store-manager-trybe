@@ -1,5 +1,5 @@
 const { ObjectID } = require('mongodb');
-const product = require('../../model/document')('products');
+const product = require('../../models/document')('products');
 const { productSchema } = require('../../commons/joiSchemas');
 
 module.exports = async (id, { name, quantity }) => {

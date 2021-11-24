@@ -1,5 +1,5 @@
 const { ObjectID } = require('mongodb');
-const sale = require('../../model/document')('sales');
+const sale = require('../../models/document')('sales');
 
 const ERR_OBJ = { err: { code: 'not_found', message: 'Sale not found' } };
 

@@ -1,5 +1,5 @@
 const { ObjectID } = require('mongodb');
-const sale = require('../../model/document')('sales');
+const sale = require('../../models/document')('sales');
 const { saleSchema } = require('../../commons/joiSchemas');
 
 const ERR_OBJ = { err: { message: 'Wrong product ID or invalid quantity', code: 'invalid_data' } };

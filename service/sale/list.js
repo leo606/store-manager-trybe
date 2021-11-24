@@ -1,4 +1,4 @@
-const sale = require('../../model/document')('sales');
+const sale = require('../../models/document')('sales');
 
 module.exports = async () => {
   try {

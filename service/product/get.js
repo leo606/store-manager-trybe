@@ -1,5 +1,5 @@
 const { ObjectID } = require('mongodb');
-const product = require('../../model/document')('products');
+const product = require('../../models/document')('products');
 
 module.exports = async (id) => {
   if (!ObjectID.isValid(id)) {

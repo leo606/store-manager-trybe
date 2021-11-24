@@ -11,7 +11,7 @@ const MONGO_OPTS = {
 
 let db = null;
 
-async function connection() {
+function connection() {
   return db
     ? Promise.resolve(db)
     : MongoClient.connect(MONGO_DB_URL, MONGO_OPTS).then((conn) => {

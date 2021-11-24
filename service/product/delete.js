@@ -1,5 +1,5 @@
 const { ObjectID } = require('mongodb');
-const product = require('../../model/document')('products');
+const product = require('../../models/document')('products');
 
 const ERR_OBJ = { err: { message: 'Wrong id format', code: 'invalid_data' } };
 
