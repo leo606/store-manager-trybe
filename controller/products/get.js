@@ -1,5 +1,5 @@
 const statusCodes = require('../../commons/statusCodes.json');
-const service = require('../../service/product');
+const service = require('../../services/product');
 
 module.exports = async (req, res, next) => {
   const { id } = req.params;
