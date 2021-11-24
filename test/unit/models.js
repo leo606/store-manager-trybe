@@ -146,55 +146,5 @@ describe("teste de models", () => {
         .to.be.a("object")
         .that.have.property("quantity", 4);
     });
-
-    // it("retorna um objeto correto", async () => {
-    //   await connectionMock
-    //     .db("StoreManager")
-    //     .collection("products")
-    //     .insertMany([...productsList]);
-
-    //   const doc = await connectionMock
-    //     .db("StoreManager")
-    //     .collection("products")
-    //     .findOne({ ...productsList[0] }, { $toString: "$_id" });
-
-    //   const response = await Model.update({ id: doc._id, quantity: 4 });
-    //   expect(response.value)
-    //     .to.be.a("object")
-    //     .that.have.property("title", "cool product");
-    //   expect(response.value)
-    //     .to.be.a("object")
-    //     .that.have.property("quantity", 4);
-    // });
   });
 });
-
-// describe("inserir filme no DB off", () => {
-//   let connectionMock;
-//   before(async () => {
-//     const MOCK_DB = await MongoMemoryServer.create();
-//     const MOCK_URI = MOCK_DB.getUri();
-
-//     connectionMock = await MongoClient.connect("mongodb://0.0.0.0:123/", DB_OPTIONS);
-
-//     sinon.stub(MongoClient, "connect").resolves(connectionMock);
-//   });
-
-//   after(async () => {
-//     await connectionMock.db("StoreManager").collection("products").drop();
-//     MongoClient.connect.restore();
-//   });
-
-//   describe("inserido com erro", () => {
-//     it("retorna um objeto erro", async () => {
-//       const response = await Model.create("null");
-//       expect(response).to.be.a("object");
-//     });
-
-//     it("retorna um objeto erro correto", async () => {
-//       const response = await Model.create(null);
-//       expect(response).to.have.a.property("err").that.is.a("string");
-//       expect(response).to.have.a.property("err", "db_error");
-//     });
-//   });
-// });
