@@ -3,7 +3,7 @@ const sinon = require("sinon");
 const { MongoMemoryServer } = require("mongodb-memory-server");
 const { MongoClient } = require("mongodb");
 
-const Model = require("../../model/document");
+const Model = require("../../model/document")("products");
 const mongoConnection = require("../../model/connection");
 
 describe("inserir filme no DB", () => {
@@ -18,20 +18,40 @@ describe("inserir filme no DB", () => {
   let connectionMock;
 
   before(async () => {
-    const memoryServer = await MongoMemoryServer.create();
-    const mockURI = memoryServer.getUri();
+    const MOCK_DB = await MongoMemoryServer.create();
+    const MOCK_URI = MOCK_DB.getUri();
 
-    connectionMock = MongoClient.connect(mockURI, DB_OPTIONS).then(
-      (conn) => conn.db("StoreManager")
-    );
+    connectionMock = await MongoClient.connect(MOCK_URI, DB_OPTIONS);
 
-    sinon.stub(mongoConnection,'connection').resolves(connectionMock);
+    sinon.stub(MongoClient, "connect").resolves(connectionMock);
+  });
+
+  after(async () => {
+    await connectionMock.db("StoreManager").collection("products").drop();
+    MongoClient.connect.restore();
   });
 
   describe("inserido com sucesso", () => {
     it("retorna um objeto", async () => {
-      const response = await MovieModel.create(payloadMovie);
+      const response = await Model.create({
+        title: "cool product",
+        quantity: 9,
+      });
       expect(response).to.be.a("object");
+    });
+  });
+
+  describe("inserido com asdasd", () => {
+    it("retorna um objeto correto", async () => {
+      const response = await Model.create({
+        title: "cool product",
+        quantity: 9,
+      });
+      expect(response).to.have.a.property("ops").that.is.a("array");
+      expect(response).to.have.a.property("insertedCount").that.is.a("number");
+      expect(response.ops[0]).to.have.a.property("_id");
+      expect(response.ops[0]).to.have.a.property("title", "cool product");
+      expect(response.ops[0]).to.have.a.property("quantity", 9);
     });
   });
 });
