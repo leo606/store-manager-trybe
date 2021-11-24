@@ -6,6 +6,6 @@ module.exports = async (collection, entity) => {
     const inserted = db.collection(collection).insertOne(entity);
     return inserted;
   } catch (e) {
-    console.log(e);
+    return { err: 'db_error' };
   }
 };
