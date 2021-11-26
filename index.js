@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(express.json());
 
-app.use(require('./controller/root'));
+app.use(require('./controllers/root'));
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (_request, response) => {

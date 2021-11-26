@@ -2,18 +2,16 @@ const sinon = require("sinon");
 const { expect } = require("chai");
 
 describe("service de produtos", () => {
-  const product = require("../../models/document")("find");
+  const product = require("../../models/document")("products");
   const service = require("../../services/product");
   describe("listar", () => {
     before(() => {
-      sinon.stub(product, "find").resolves([1, 2, 3]);
-    });
-    after(() => {
-      product.find.restore();
+      sinon.stub(product, "list").resolves([1, 2, 3]);
     });
 
     it("listar", async () => {
       const ls = await service.list();
+      console.log(ls.products);
       expect(ls).to.be.an("object").that.have.property("products");
     });
   });
@@ -161,13 +159,6 @@ describe("service de sales", () => {
     after(() => {
       product.find.restore();
     });
-
-    // describe("ldfkjg", () => {
-    //   it("criar existente", async () => {
-    //     const ls = await service.create([...mockSale]);
-    //     expect(ls).to.be.an("object");
-    //   });
-    // });
   });
 
   describe("deletar", () => {
