@@ -2,6 +2,7 @@ const sinon = require("sinon");
 const { expect } = require("chai");
 
 const serviceProduct = require("../../services/product");
+const serviceSales = require("../../services/sale");
 const { request, response } = require("express");
 
 describe("controller products", () => {
@@ -174,7 +175,6 @@ describe("controller products", () => {
         expect(response.status.calledOnceWith(200)).to.be.equal(true);
       });
     });
-
   });
 
   describe("list", () => {
@@ -183,13 +183,14 @@ describe("controller products", () => {
 
     describe("buscar produto ok", () => {
       before(() => {
-
         response.status = sinon.stub().returns(response);
         response.json = sinon.stub().returns();
-        sinon.stub(serviceProduct, "list").resolves([{
-          name: "product name",
-          quantity: 8,
-        }]);
+        sinon.stub(serviceProduct, "list").resolves([
+          {
+            name: "product name",
+            quantity: 8,
+          },
+        ]);
       });
 
       after(() => {
@@ -200,7 +201,6 @@ describe("controller products", () => {
         expect(response.status.calledOnceWith(200)).to.be.equal(true);
       });
     });
-
   });
 
   describe("update", () => {
@@ -285,7 +285,7 @@ describe("controller sales", () => {
 
     describe("erro", () => {
       before(() => {
-        request.body = {};
+        request.body = undefined;
 
         response.status = sinon.stub().returns(response);
         response.json = sinon.stub().returns();
@@ -298,7 +298,7 @@ describe("controller sales", () => {
         await controllerCreate(request, response, next);
         expect(
           next.calledWith({
-            message: "must inform name, qty",
+            message: "Wrong product ID or invalid quantity",
             code: "invalid_data",
           })
         );
@@ -312,7 +312,7 @@ describe("controller sales", () => {
         response.status = sinon.stub().returns(response);
         response.json = sinon.stub().returns();
         sinon
-          .stub(serviceProduct, "create")
+          .stub(serviceSales, "create")
           .resolves({ err: { message: "", code: "" } });
       });
       after(() => {
@@ -334,7 +334,7 @@ describe("controller sales", () => {
         response.status = sinon.stub().returns(response);
         response.json = sinon.stub().returns();
         sinon
-          .stub(serviceProduct, "create")
+          .stub(serviceSales, "create")
           .resolves({ name: "khkj jsh df", quantity: 9 });
       });
       after(() => {
@@ -343,22 +343,22 @@ describe("controller sales", () => {
 
       it("chama res", async () => {
         await controllerCreate(request, response, next);
-        expect(response.status.calledWith(201)).to.be.equal(true);
+        expect(response.status.calledWith(200)).to.be.equal(true);
       });
     });
   });
 
   describe("delete", () => {
-    const controllerDelete = require("../../controllers/products/delete");
+    const controllerDelete = require("../../controllers/sales/delete");
     let next = sinon.stub().returns((c) => {});
 
-    describe("deletar produto erro", () => {
+    describe("deletar sale erro", () => {
       before(() => {
         request.params = {};
 
         response.status = sinon.stub().returns(response);
         response.json = sinon.stub().returns();
-        sinon.stub(serviceProduct, "remove").resolves({
+        sinon.stub(serviceSales, "remove").resolves({
           err: { message: "Wrong id format", code: "invalid_data" },
         });
       });
@@ -376,13 +376,13 @@ describe("controller sales", () => {
       });
     });
 
-    describe("deletar produto ok", () => {
+    describe("deletar sale ok", () => {
       before(() => {
         request.params = { id: "thisisarealid" };
 
         response.status = sinon.stub().returns(response);
         response.json = sinon.stub().returns();
-        sinon.stub(serviceProduct, "remove").resolves({
+        sinon.stub(serviceSales, "remove").resolves({
           name: "product name",
           quantity: 8,
         });
@@ -399,16 +399,39 @@ describe("controller sales", () => {
   });
 
   describe("get", () => {
-    const controllerGet = require("../../controllers/products/get");
+    const controllerGet = require("../../controllers/sales/get");
     let next = sinon.stub().returns((c) => {});
 
-    describe("buscar produto erro", () => {
+    describe("buscar produto sem id", () => {
+      const response = {};
+      const request = {};
       before(() => {
         request.params = {};
 
         response.status = sinon.stub().returns(response);
         response.json = sinon.stub().returns();
-        sinon.stub(serviceProduct, "remove").resolves({
+      });
+
+      after(() => {
+        sinon.restore();
+      });
+      it("chama next", async () => {
+        await controllerGet(request, response, next);
+        expect(
+          next.calledOnceWith({
+            err: { status: 404, code: "not_found" },
+          })
+        ).to.be.equal(true);
+      });
+    });
+
+    describe("buscar produto erro", () => {
+      before(() => {
+        request.params = { id: "123" };
+
+        response.status = sinon.stub().returns(response);
+        response.json = sinon.stub().returns();
+        sinon.stub(serviceSales, "get").resolves({
           err: { message: "Wrong id format", code: "invalid_data" },
         });
       });
@@ -446,7 +469,6 @@ describe("controller sales", () => {
         expect(response.status.calledOnceWith(200)).to.be.equal(true);
       });
     });
-
   });
 
   describe("list", () => {
@@ -455,13 +477,14 @@ describe("controller sales", () => {
 
     describe("buscar produto ok", () => {
       before(() => {
-
         response.status = sinon.stub().returns(response);
         response.json = sinon.stub().returns();
-        sinon.stub(serviceProduct, "list").resolves([{
-          name: "product name",
-          quantity: 8,
-        }]);
+        sinon.stub(serviceProduct, "list").resolves([
+          {
+            name: "product name",
+            quantity: 8,
+          },
+        ]);
       });
 
       after(() => {
@@ -472,7 +495,6 @@ describe("controller sales", () => {
         expect(response.status.calledOnceWith(200)).to.be.equal(true);
       });
     });
-
   });
 
   describe("update", () => {
