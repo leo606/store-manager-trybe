@@ -15,7 +15,7 @@ Nesse projeto, as principais habilidades desenvolvidas foram:
 - Entender e aplicar os padrões REST;
 - Escrever assinaturas para APIs intuitivas e facilmente entendíveis.
 
-## O que deverá ser desenvolvido
+## O que foi desenvolvido
 
 Foi desenvolvido uma API utilizando a arquitetura MSC!
 
