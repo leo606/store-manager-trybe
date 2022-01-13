@@ -17,7 +17,7 @@ Nesse projeto, as principais habilidades desenvolvidas foram:
 
 ## O que foi desenvolvido
 
-Foi desenvolvido uma API utilizando a arquitetura MSC!
+Esse projeto foi desenvolvido durante o curso de desenvolvimento web da Trybe. Foi feito uma API utilizando a arquitetura MSC!
 
 A API construída trata-se de um sistema de gerenciamento de vendas, onde será possível criar, visualizar, deletar e atualizar produtos e vendas.
 
